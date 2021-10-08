@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/DELL/Desktop/Code Tests/Movies/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/DELL/Desktop/Code Tests/Movies/app/src/main/res/layout/fragment_movie_detail.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/DELL/Desktop/Code Tests/Movies/app/src/main/res/layout/fragment_movie_pager.xml" value="0.184375" />
         <entry key="..\:/Users/DELL/Desktop/Code Tests/Movies/app/src/main/res/layout/fragment_movies_list.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/DELL/Desktop/Code Tests/Movies/app/src/main/res/layout/fragment_upcoming_movies_list.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/DELL/Desktop/Code Tests/Movies/app/src/main/res/layout/item_recycler_movie.xml" value="0.33" />

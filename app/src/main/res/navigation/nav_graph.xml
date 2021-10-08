@@ -2,9 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/upcomingMoviesListFragment">
+    app:startDestination="@id/moviePagerFragment">
     <fragment
-        android:id="@+id/upcomingMoviesListFragment"
-        android:name="com.aungkhantphyo.movies.upcomingMovieListFragment.UpcomingMoviesListFragment"
-        android:label="UpcomingMoviesListFragment" />
+        android:id="@+id/moviePagerFragment"
+        android:name="com.aungkhantphyo.movies.MovieListFragment.MoviePagerFragment"
+        android:label="MoviePagerFragment" >
+        <action
+            android:id="@+id/action_moviePagerFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.aungkhantphyo.movies.movieDetailFragment.MovieDetailFragment"
+        android:label="MovieDetailFragment" >
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+    </fragment>
 </navigation>

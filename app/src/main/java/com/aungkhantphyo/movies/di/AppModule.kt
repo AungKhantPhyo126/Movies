@@ -2,9 +2,8 @@ package com.aungkhantphyo.movies.di
 
 import android.content.Context
 import com.aungkhantphyo.movies.localdatabase.AppDatabase
-import com.aungkhantphyo.movies.localdatabase.dao.PopularMoviesDao
 import com.aungkhantphyo.movies.localdatabase.dao.RemoteKeyDao
-import com.aungkhantphyo.movies.localdatabase.dao.UpcomingMoviesDao
+import com.aungkhantphyo.movies.localdatabase.dao.MovieDao
 import com.aungkhantphyo.movies.network.MovieApiService
 import com.readystatesoftware.chuck.ChuckInterceptor
 import com.squareup.moshi.Moshi
@@ -23,7 +22,7 @@ import javax.inject.Singleton
 
 const val BASE_URL="https://api.themoviedb.org/3/movie/"
 const val API_KEY="012a0a929d214b25f6dc147d762bd6e4"
-const val BASE_IMG_URL="https://image.tmdb.org/t/p/w500"
+const val BASE_IMG_URL="https://image.tmdb.org/t/p/w400"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -48,7 +47,7 @@ class AppModule {
     @Singleton
     fun provideMovieApiService(retrofit: Retrofit) = retrofit.create<MovieApiService>()
 
-
+    @Singleton
     @Provides
     fun provideRoomDatabase(@ApplicationContext context: Context)  : AppDatabase {
         return AppDatabase.create(context)
@@ -59,13 +58,8 @@ class AppModule {
     }
 
     @Provides
-    fun providePopularMoviesDao(appDatabase: AppDatabase) : PopularMoviesDao {
-        return appDatabase.popularMoviesDao()
-    }
-
-    @Provides
-    fun provideUpcomingMoviesDao(appDatabase: AppDatabase) : UpcomingMoviesDao {
-        return appDatabase.upcomingMoviesDao()
+    fun provideMovieDao(appDatabase: AppDatabase) : MovieDao {
+        return appDatabase.moviesDao()
     }
 
     @Provides

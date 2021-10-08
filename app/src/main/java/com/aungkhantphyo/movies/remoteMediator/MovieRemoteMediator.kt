@@ -8,38 +8,38 @@ import androidx.room.withTransaction
 import com.aungkhantphyo.movies.di.API_KEY
 import com.aungkhantphyo.movies.localdatabase.AppDatabase
 import com.aungkhantphyo.movies.localdatabase.dao.RemoteKeyDao
-import com.aungkhantphyo.movies.localdatabase.dao.UpcomingMoviesDao
-import com.aungkhantphyo.movies.localdatabase.entity.RemoteKey
-import com.aungkhantphyo.movies.localdatabase.entity.UpcomingMoviesEntity
+import com.aungkhantphyo.movies.localdatabase.dao.MovieDao
+import com.aungkhantphyo.movies.localdatabase.entity.*
 import com.aungkhantphyo.movies.network.MovieApiService
 import com.aungkhantphyo.movies.network.dto.asEntity
+import com.aungkhantphyo.movies.network.responses.MovieResponse
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class UpcomingMoviesRemoteMediator (
-    private val upcomingMoviesDao: UpcomingMoviesDao,
+class MovieRemoteMediator (
+    private val type:String,
+    private val movieDao: MovieDao,
     private val remoteKeyDao: RemoteKeyDao,
     private val movieApiService: MovieApiService,
     private val database: AppDatabase
-) : RemoteMediator<Int, UpcomingMoviesEntity>() {
+) : RemoteMediator<Int, MovieEntity>() {
 
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, UpcomingMoviesEntity>
+        state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         return try{
 
             val loadKey = when (loadType) {
-                LoadType.REFRESH -> null
+                LoadType.REFRESH -> 1
                 LoadType.PREPEND->
                     return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND->{
                     val remoteKey = database.withTransaction {
-                        remoteKeyDao.remoteKey()
+                        remoteKeyDao.remoteKey(if (type== UPCOMING) UPCOMING_PAGE_KEY else POPULAR_PAGE_KEY)
                     }
 
                     if (remoteKey.nextKey == null) {
@@ -50,24 +50,27 @@ class UpcomingMoviesRemoteMediator (
                     remoteKey.nextKey
                 }
             }
-
-            val response = movieApiService.getUpcomingMovies(
-                apiKey = API_KEY, pageNumber = loadKey?:1
-            )
-            database.withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    upcomingMoviesDao.delete()
-                    remoteKeyDao.delete()
-                }
-
-                remoteKeyDao.insertOrReplace(
-                    RemoteKey(response.body()?.page?:1 +1)
+            val keyId=if (type== UPCOMING) UPCOMING_PAGE_KEY else POPULAR_PAGE_KEY
+            val response=if (type== UPCOMING){
+                movieApiService.getUpcomingMovies(
+                    apiKey = API_KEY, pageNumber = loadKey
                 )
-
-                upcomingMoviesDao.saveUpcomingMovies(response.body()?.results?.map { it.asEntity() }.orEmpty())
+            }else{
+                movieApiService.getPopularMovies(
+                    apiKey = API_KEY,pageNumber = loadKey
+                )
             }
+
+            val isLastPage = loadKey == response.body()?.totalPages
+            database.withTransaction {
+                remoteKeyDao.insertOrReplace(
+                    RemoteKey(keyId = keyId,nextKey = if(isLastPage) null else loadKey+1)
+                )
+                movieDao.saveUpcomingMovies(response.body()?.results?.map { it.asEntity(type) }.orEmpty())
+            }
+
             MediatorResult.Success(
-                endOfPaginationReached = response.body()?.page == response.body()?.totalPages
+                endOfPaginationReached = loadKey == response.body()?.totalPages
             )
         }catch (e: IOException) {
             MediatorResult.Error(e)

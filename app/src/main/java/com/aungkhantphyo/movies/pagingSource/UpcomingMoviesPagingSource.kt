@@ -1,22 +1,12 @@
 package com.aungkhantphyo.movies.pagingSource
 
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import com.aungkhantphyo.movies.di.API_KEY
-import com.aungkhantphyo.movies.localdatabase.AppDatabase
-import com.aungkhantphyo.movies.localdatabase.entity.UpcomingMoviesEntity
-import com.aungkhantphyo.movies.network.MovieApiService
-import com.aungkhantphyo.movies.network.dto.asEntity
-import retrofit2.HttpException
-import java.io.IOException
-
 //class UpcomingMoviesPagingSource(
 //    private val movieApiService: MovieApiService,
 //    private val appDatabase: AppDatabase
 //
-//) : PagingSource<Int, UpcomingMoviesEntity>() {
+//) : PagingSource<Int, MovieEntity>() {
 //
-//    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UpcomingMoviesEntity> {
+//    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieEntity> {
 //
 //        return try {
 //            val currentPageNumber = params.key?:1
@@ -37,7 +27,7 @@ import java.io.IOException
 //        }
 //    }
 //
-//    override fun getRefreshKey(state: PagingState<Int, UpcomingMoviesEntity>): Int? {
+//    override fun getRefreshKey(state: PagingState<Int, MovieEntity>): Int? {
 //        return  0
 ////        state.anchorPosition?.let {
 ////            state.closestPageToPosition(it)?.prevKey?.plus(1)

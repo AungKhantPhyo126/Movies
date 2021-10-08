@@ -5,14 +5,14 @@
 
     <data>
         <variable
-            name="upcomingmovies"
-            type="com.aungkhantphyo.movies.domain.UpcomingMovies" />
+            name="movies"
+            type="com.aungkhantphyo.movies.domain.Movie" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/tv_movie_title"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="70dp"
         android:layout_marginRight="16dp"
@@ -28,9 +28,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="5dp"
-                app:imageUrl="@{upcomingmovies.posterPath}"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toTopOf="@+id/movie_title"
+                app:imageUrl="@{movies.posterPath}"
+                app:layout_constraintBottom_toTopOf="@+id/fav_animation_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -43,10 +43,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="20dp"
-                android:text="@{upcomingmovies.title}"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@{movies.title}"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="@id/fav_animation_view"
+                app:layout_constraintBottom_toBottomOf="@id/fav_animation_view"
                 app:layout_constraintEnd_toStartOf="@+id/fav_animation_view"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -57,11 +57,11 @@
                 android:layout_width="80dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/movie_title"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/movie_title"
-                app:layout_constraintTop_toTopOf="@+id/movie_title"
+                app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster"
                 app:lottie_autoPlay="false"
                 app:lottie_loop="false"
                 app:lottie_rawRes="@raw/favorite_material" />
