@@ -15,8 +15,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-private const val ARG_OBJECT = "object"
-
 class MoviePagerFragment: Fragment() {
     private lateinit var binding:FragmentMoviePagerBinding
     override fun onCreateView(

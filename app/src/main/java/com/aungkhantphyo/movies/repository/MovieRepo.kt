@@ -64,7 +64,7 @@ class MovieRepo @Inject constructor(
 
     suspend fun toggleFavorite(movieId:String){
         val movie = movieDao.getMovie(movieId).asDomain()
-        if (movie.isFav == false){
+        if (!movie.isFav){
             movieDao.toggleFavorite(movieId,true)
         }else movieDao.toggleFavorite(movieId,false)
 

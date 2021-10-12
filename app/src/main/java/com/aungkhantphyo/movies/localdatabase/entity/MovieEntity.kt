@@ -30,7 +30,8 @@ data class RemoteKey(
 
 fun MovieEntity.asDomain():Movie{
     return Movie(
-        id = movieId,
+        id = id,
+        movieId=movieId,
         title = title,
         posterPath = posterPath,
         type=type,

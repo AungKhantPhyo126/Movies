@@ -37,11 +37,11 @@ interface MovieDao {
     suspend fun delete(type: String)
 
     @Transaction
-    @Query("select * from movies where movieId=:movieId")
-    suspend fun getMovie(movieId:String):MovieEntity
+    @Query("select * from movies where id=:id")
+    suspend fun getMovie(id:String):MovieEntity
 
-    @Query("update movies set isFav = :favorite where  movieId = :movieId")
-    fun toggleFavorite(movieId: String, favorite: Boolean)
+    @Query("update movies set isFav = :favorite where  id = :id")
+    fun toggleFavorite(id: String, favorite: Boolean)
 }
 
 @Dao

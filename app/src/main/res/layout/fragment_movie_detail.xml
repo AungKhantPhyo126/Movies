@@ -35,15 +35,15 @@
             android:layout_marginStart="5dp"
             android:text="@{movie.title}"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/fav_animation_view"
-            app:layout_constraintEnd_toStartOf="@+id/fav_animation_view"
+            app:layout_constraintBottom_toBottomOf="@id/iv_fav"
+            app:layout_constraintEnd_toStartOf="@+id/iv_fav"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/fav_animation_view" />
+            app:layout_constraintTop_toTopOf="@id/iv_fav" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fav_animation_view"
+            android:id="@+id/iv_fav"
             android:layout_width="80dp"
             android:layout_height="50dp"
             android:layout_marginEnd="5dp"

@@ -2,6 +2,7 @@ package com.aungkhantphyo.movies.domain
 
 data class Movie(
     val id:String,
+    val movieId:String,
     val title:String,
     val posterPath:String,
     val type:String,
